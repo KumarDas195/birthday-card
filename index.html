@@ -1,31 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🎂</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
-<link href="style.css" rel="stylesheet">
-<script>
-    function playSong() {
-      document.getElementById("birthday-song").play();
-    }
-    </script>
 <body>
-    <div class="card" id="greeting-card">
-      <h1>Happy Birthday!</h1>
-      <p class="message">
-        Wishing you all the happiness and joy on your special day Smriti👸🏻
-      </p>
-      <div class="card-links">
-        <a href="#send" class="send-link" onclick="playSong()">Click here</a>
+
+  <canvas id="bg-canvas"></canvas>
+  <div class="particles" id="particles"></div>
+    
+  <div class="scene" id="envelope-screen">
+    <div class="floating-emojis" id="floating-emojis"></div>
+    <div class="envelope-wrap">
+      <div class="pre-label">You've got mail from Sunil 💌</div>
+      <div class="envelope" id="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-body">
+          <div class="envelope-letter">
+            <span>A birthday surprise awaits...</span>
+          </div>
+        </div>
+          
+        <div class="envelope-front">
+          <div class="wax-seal" onclick="openEnvelope()">
+            <span class="seal-icon">✦</span>
+          </div>
+        </div>
       </div>
-  	</div>
-    <section id="send">
-      <audio id="birthday-song" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2026/01/22/audio_25e64d5b94.mp3?filename=nastelbom-happy-birthday-471481.mp3" 
-        type="audio/mpeg">
-      </audio>
-    </section>
-  </body>
+      <p class="hint">Click the seal to open</p>
+    </div>
+  </div>
+
+  <div class="card-scene" id="card-scene">
+    <div class="card" id="card">
+
+      <div class="card-left">
+        <div class="vertical-text">....Name......</div>
+        <div class="candle-group">
+          <div class="candle short"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle tall"><div class="flame"></div></div>
+          <div class="candle"><div class="flame"></div></div>
+          <div class="candle short"><div class="flame"></div></div>
+        </div>
+        <div class="left-decor">✦</div>
+      </div>
+
+      <div class="card-right">
+        <div class="card-header">
+          <div class="date-chip" id="date-chip"></div>
+          <div class="tag-line">A little Wishes from Sunil ✦</div>
+        </div>
+
+        <div class="big-wish">
+          <span class="wish-line" id="w1">Happy</span>
+          <span class="wish-line italic" id="w2">Birthday</span>
+          <span class="wish-line accent" id="w3">Dear ...name...! 🎂</span>
+        </div>
+
+        <div class="message-body">
+          <p>May this day be as bright and wonderful as the smile you put on everyone around you.</p>
+          <p>Here's to laughter that fills the room, adventures that build the best stories, and a year that gives you everything you deserve. 🎀</p>
+        </div>
+
+        <div class="live-clock-box">
+          <span class="clock-label">Time of celebration</span>
+          <div class="live-clock" id="live-clock">00:00:00</div>
+        </div>
+
+        <div class="signature">
+          <div class="sig-line"></div>
+          <span>With love &amp; warmth</span>
+        </div>
+
+        <div class="bottom-row">
+          <button class="wish-btn celebrate-btn" onclick="burstConfetti()">🎊 Celebrate!</button>
+          <button class="wish-btn music-btn" id="music-btn" onclick="toggleMusic()">♪ Play</button>
+          <button class="wish-btn wish-popup-btn" onclick="showRandomWish()">💌 Wish</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="countdown-bar" id="countdown-bar">
+      <span id="countdown-text"></span>
+    </div>
+  </div>
+    
+  <div class="modal-overlay" id="modal">
+    <div class="modal-box">
+      <div class="modal-emoji" id="modal-emoji"></div>
+      <p class="modal-quote" id="modal-quote"></p>
+      <button class="modal-close" onclick="closeModal()">Close ✕</button>
+    </div>
+  </div>
+
+  <audio id="song" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2026/01/22/audio_25e64d5b94.mp3?filename=nastelbom-happy-birthday-471481.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="script.js"></script>
+</body>
 </html>
+
