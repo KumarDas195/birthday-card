@@ -1,8 +1,3 @@
-// ══════════════════════════════════════════
-//  BIRTHDAY CARD — FINAL COMPLETE JS
-// ══════════════════════════════════════════
-
-// ── STARFIELD CANVAS ──────────────────────
 const canvas = document.getElementById('bg-canvas');
 const ctx    = canvas.getContext('2d');
 
@@ -20,8 +15,6 @@ const stars = Array.from({ length: 140 }, () => ({
   phase: Math.random() * Math.PI * 2,
   speed: 0.002 + Math.random() * 0.004
 }));
-
-// Shooting stars
 const shoots = [];
 function spawnShoot() {
   shoots.push({
@@ -37,8 +30,6 @@ setInterval(spawnShoot, 3500);
 
 function drawBg(t) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // Background
   const grd = ctx.createRadialGradient(
     canvas.width * 0.35, canvas.height * 0.4, 0,
     canvas.width * 0.5,  canvas.height * 0.5, canvas.width * 0.85
@@ -48,8 +39,6 @@ function drawBg(t) {
   grd.addColorStop(1, '#000000');
   ctx.fillStyle = grd;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Static stars
   stars.forEach(s => {
     const alpha = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(t * s.speed + s.phase));
     ctx.beginPath();
@@ -57,8 +46,6 @@ function drawBg(t) {
     ctx.fillStyle = `rgba(255,225,150,${alpha})`;
     ctx.fill();
   });
-
-  // Shooting stars
   for (let i = shoots.length - 1; i >= 0; i--) {
     const s = shoots[i];
     ctx.beginPath();
@@ -76,8 +63,6 @@ function drawBg(t) {
   requestAnimationFrame(drawBg);
 }
 requestAnimationFrame(drawBg);
-
-// ── FLOATING EMOJIS ON ENVELOPE SCREEN ───
 const floatEmojis = ['🎈','🎉','✨','🎀','🌟','🎊','💛','🥳'];
 floatEmojis.forEach((em, i) => {
   const el = document.createElement('div');
@@ -90,14 +75,10 @@ floatEmojis.forEach((em, i) => {
   `;
   document.getElementById('floating-emojis').appendChild(el);
 });
-
-// ── DATE CHIP ─────────────────────────────
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const now = new Date();
 document.getElementById('date-chip').textContent =
   `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
-
-// ── LIVE CLOCK ────────────────────────────
 function updateClock() {
   const d = new Date();
   const hh = String(d.getHours()).padStart(2,'0');
@@ -108,8 +89,6 @@ function updateClock() {
 }
 updateClock();
 setInterval(updateClock, 1000);
-
-// ── COUNTDOWN TO NEXT BIRTHDAY ────────────
 function updateCountdown() {
   const now  = new Date();
   const next = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
@@ -124,8 +103,6 @@ function updateCountdown() {
 }
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// ── ENVELOPE OPEN ─────────────────────────
 function openEnvelope() {
   const env     = document.getElementById('envelope');
   const screen  = document.getElementById('envelope-screen');
@@ -136,22 +113,15 @@ function openEnvelope() {
   setTimeout(() => {
     screen.classList.add('hidden');
     cardScn.classList.add('visible');
-
-    // Auto music
     song.play().catch(() => {});
     playing = true;
     musicBtn.textContent = '♪ Pause';
     musicBtn.classList.add('playing');
 
-    // Auto confetti shower
     autoConfetti();
-
-    // Welcome toast
     showToast('🥳 Welcome! Today is all about you!');
   }, 950);
 }
-
-// ── MUSIC ─────────────────────────────────
 let playing = false;
 const song     = document.getElementById('song');
 const musicBtn = document.getElementById('music-btn');
@@ -170,7 +140,6 @@ function toggleMusic() {
   }
 }
 
-// ── CONFETTI ──────────────────────────────
 const confettiColors = [
   '#c9933a','#e8c47a','#c0404a','#e87c85',
   '#5a7a5c','#fff8f0','#d4a853','#9b7fd4','#f472b6'
@@ -202,7 +171,6 @@ function autoConfetti() {
   }
 }
 
-// ── CELEBRATE BUTTON ──────────────────────
 const celebrateQuotes = [
   { emoji: '🎂', text: 'Another year of being absolutely fabulous!' },
   { emoji: '✨', text: 'May your day be as bright as your smile!' },
@@ -220,16 +188,12 @@ let lastQuoteIdx = -1;
 function burstConfetti() {
   const cx = window.innerWidth  / 2;
   const cy = window.innerHeight * 0.3;
-
-  // 1. Confetti rain
   for (let i = 0; i < 90; i++) {
     setTimeout(() => spawnPiece(
       cx + (Math.random() - 0.5) * 340,
       cy + (Math.random() - 0.5) * 90
     ), Math.random() * 500);
   }
-
-  // 2. Emoji burst floating up
   const emojis = ['🎉','🎊','🎈','✨','🥳','💛','🌟','🎀','🎂','🍾'];
   emojis.forEach((em, i) => {
     setTimeout(() => {
@@ -248,8 +212,6 @@ function burstConfetti() {
       setTimeout(() => el.remove(), 2400);
     }, i * 100);
   });
-
-  // 3. Screen flash
   const flash = document.createElement('div');
   flash.style.cssText = `
     position: fixed; inset: 0;
@@ -259,14 +221,10 @@ function burstConfetti() {
   `;
   document.body.appendChild(flash);
   setTimeout(() => flash.remove(), 750);
-
-  // 4. Card shake
   const card = document.getElementById('card');
   card.style.animation = 'none';
   setTimeout(() => { card.style.animation = 'cardShake 0.55s ease'; }, 10);
   setTimeout(() => { card.style.animation = ''; }, 700);
-
-  // 5. Quote toast at bottom
   let idx;
   do { idx = Math.floor(Math.random() * celebrateQuotes.length); }
   while (idx === lastQuoteIdx);
@@ -294,8 +252,6 @@ function burstConfetti() {
   `;
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 4000);
-
-  // 6. Side ribbon bursts
   ['10%','90%'].forEach((left, side) => {
     for (let i = 0; i < 18; i++) {
       setTimeout(() => spawnPiece(
@@ -305,8 +261,6 @@ function burstConfetti() {
     }
   });
 }
-
-// ── TOAST HELPER ──────────────────────────
 function showToast(msg) {
   const t = document.createElement('div');
   t.textContent = msg;
@@ -325,8 +279,6 @@ function showToast(msg) {
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 3200);
 }
-
-// ── WISH MODAL ────────────────────────────
 const wishPool = [
   { emoji: '🌺', quote: 'May every dream you chase this year catch you right back.' },
   { emoji: '🥂', quote: 'Here\'s to you — the most wonderful kind of human.' },
@@ -358,13 +310,9 @@ function closeModal() {
   modal.classList.remove('open');
   modal.style.display = 'none';
 }
-
-// Close modal on overlay click
 document.getElementById('modal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
-
-// ── MOUSE SPARKLES ON CARD ────────────────
 document.addEventListener('mousemove', e => {
   const cs = document.getElementById('card-scene');
   if (!cs.classList.contains('visible')) return;
@@ -382,9 +330,6 @@ document.addEventListener('mousemove', e => {
     setTimeout(() => p.remove(), 1500);
   }
 });
-
-// ── KEYBOARD SHORTCUT ─────────────────────
-// Press Space = Celebrate, M = music, W = wish
 document.addEventListener('keydown', e => {
   const cs = document.getElementById('card-scene');
   if (!cs.classList.contains('visible')) return;
